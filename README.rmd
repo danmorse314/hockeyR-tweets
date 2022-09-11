@@ -1,0 +1,29 @@
+---
+title: "README"
+author: "Dan Morse"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## hockeyR tweets
+
+This is the brain of [`hockeyR`](https://github.com/danmorse314/hockeyR)'s very own [twitter account](https://twitter.com/hockeyR_). THe bulk of this account's tweets are automated to post the latest commits to any of the `hockeyR` GitHub repositories:
+
+-   [`hockeyR`](https://github.com/danmorse314/hockeyR)
+-   [`hockeyR-data`](https://github.com/danmorse314/hockeyR-data)
+-   [`hockeyR-models`](https://github.com/danmorse314/hockeyR-models)
+
+The commits are scraped using the [`scrape commits`](https://github.com/danmorse314/hockeyR-tweets/blob/main/scrape_commits.R) function. This hasn't been widely tested on other repositories, so use with caution, but in general it does the job of scraping all commits to a given repository and returns info including author, date, commit message, and commit ID.
+
+```{r scrape-commits}
+source("scrape_commits.R")
+
+hockeyr_commits <- scrape_commits(user = "danmorse314", repo = "hockeyR", branch = "master")
+
+str(hockeyr_commits)
+```
+
+Follow [@hockeyR_](https://twitter.com/hockeyR_) on Twitter to stay up to date with the latest updates, bug fixes, and releases to the `hockeyR` package!
