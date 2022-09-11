@@ -40,7 +40,7 @@ scrape_latest_release <- function(pkg_author, pkg_name, filename = "pkg_release.
     magick::image_trim() |>
     magick::image_write(filename)
   
-  message(paste0(latest_release, " package release notes saved as ",filename))
+  message(paste0(release_version, " package release notes saved as ",filename))
   
   latest_release <- dplyr::tibble(
     release = release_version,
