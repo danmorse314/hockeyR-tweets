@@ -28,7 +28,7 @@ scrape_commits <- function(user = NULL, repo = NULL, branch = "main"){
       rvest::html_attr("datetime")
   ) |>
     dplyr::mutate(
-      datetime = lubridate::as_datetime(datetime),
+      datetime = lubridate::with_tz(lubridate::as_datetime(datetime),"US/Pacific"),
       date = format(datetime, "%Y-%m-%d"),
       time = format(datetime, "%I:%M %p")
     )
