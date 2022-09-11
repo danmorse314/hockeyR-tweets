@@ -2,7 +2,7 @@ scrape_latest_release <- function(pkg_author, pkg_name, filename = "pkg_release.
   
   # requires:
   # install.packages("webshot")
-  webshot::install_phantomjs()
+  suppressMessages(webshot::install_phantomjs())
   
   url <- paste0("https://github.com/",pkg_author,"/",pkg_name,"/releases")
   

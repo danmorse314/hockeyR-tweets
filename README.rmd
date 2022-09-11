@@ -16,6 +16,8 @@ This is the brain of [`hockeyR`](https://github.com/danmorse314/hockeyR)'s very 
 -   [`hockeyR-data`](https://github.com/danmorse314/hockeyR-data)
 -   [`hockeyR-models`](https://github.com/danmorse314/hockeyR-models)
 
+### Scraping GitHub commits
+
 The commits are scraped using the [`scrape commits`](https://github.com/danmorse314/hockeyR-tweets/blob/main/scrape_commits.R) function. This hasn't been widely tested on other repositories, so use with caution, but in general it does the job of scraping all commits to a given repository and returns info including author, date, commit message, and commit ID.
 
 ```{r scrape-commits}
@@ -26,4 +28,26 @@ hockeyr_commits <- scrape_commits(user = "danmorse314", repo = "hockeyR", branch
 str(hockeyr_commits)
 ```
 
-Follow [@hockeyR_](https://twitter.com/hockeyR_) on Twitter to stay up to date with the latest updates, bug fixes, and releases to the `hockeyR` package!
+### Scraping GitHub releases
+
+The [hockeyR\_](https://twitter.com/hockeyR_) Twitter account will also automatically post information regarding new releases. The latest release information is retrieved through the [`scrape latest_release`](https://github.com/danmorse314/hockeyR-tweets/blob/main/scrape_latest_release.R) function. Again, this hasn't been widely tested, but it should do two things:
+
+1.  Take a screenshot of the release notes found in the package releases section. The `filename` argument of `scrape_latest_release` specifies where the screenshot should be saved.
+
+2.  Return a data frame containing the title of the release, the file location for the screenshot taken, and a truncated version of the release details. The details are limited to 420 characters to reflect the [alt text limit on Twitter images](https://blog.twitter.com/developer/en_us/a/2016/alt-text-support-for-twitter-cards-and-the-rest-api#:~:text=In%20addition%20to%20Cards%2C%20we,is%20limited%20to%20420%20characters.).
+
+```{r scrape-release}
+source("scrape_latest_release.R")
+
+release_info <- scrape_latest_release(
+  pkg_author = "danmorse314",
+  pkg_name = "hockeyR",
+  filename = "example_release.png"
+)
+
+str(release_info)
+
+magick::image_read(release_info$detail_img)
+```
+
+Follow [\@hockeyR\_](https://twitter.com/hockeyR_) on Twitter to stay up to date with the latest updates, bug fixes, and releases to the `hockeyR` package!
