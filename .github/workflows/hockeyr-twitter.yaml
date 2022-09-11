@@ -14,7 +14,7 @@ jobs:
         run: Rscript -e 'install.packages(c("rtweet","dplyr","glue","stringr","rvest","git2r"), dependencies = TRUE)'
       - name: Create and post tweet
         env:
-          GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
+          GITHUB_PAT: ${{ secrets.PAT_GITHUB }}
           HOCKEYR_TWITTER_CONSUMER_API_KEY: ${{ secrets.HOCKEYR_TWITTER_CONSUMER_API_KEY }}
           HOCKEYR_TWITTER_CONSUMER_API_SECRET: ${{ secrets.HOCKEYR_TWITTER_CONSUMER_API_SECRET }}
           HOCKEYR_TWITTER_ACCESS_TOKEN: ${{ secrets.HOCKEYR_TWITTER_ACCESS_TOKEN }}
