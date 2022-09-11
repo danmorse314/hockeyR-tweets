@@ -5,13 +5,13 @@ on:
       - cron: '*/30 * * * *'
 
 jobs:
-  R-CMD-check:
+  post-tweets:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@master
-      - name: Install rtweet package
-        run: Rscript -e 'install.packages(c("rtweet","dplyr","glue","stringr","rvest","git2r"), dependencies = TRUE)'
+      - name: Install packages
+        run: Rscript -e 'install.packages(c("rtweet","dplyr","glue","stringr","rvest","git2r","lubridate"), dependencies = TRUE)'
       - name: Create and post tweet
         env:
           GITHUB_PAT: ${{ secrets.PAT_GITHUB }}
