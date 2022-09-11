@@ -60,3 +60,39 @@ if(nrow(df) > 0){
   last_commit |> saveRDS("last_commit.rds")
   
 }
+
+# look for new releases
+
+source("scrape_latest_release.R")
+
+release <- scrape_latest_release("danmorse314", "hockeyR", filename = "hockeyR-latest-release.png")
+
+# this gets updated at the end
+last_release <- readRDS("last_release.rds")
+
+if(last_release != release$release){
+  # get token
+  hockeyr_token <- rtweet::rtweet_bot(
+    api_key = Sys.getenv("HOCKEYR_TWITTER_CONSUMER_API_KEY"),
+    api_secret = Sys.getenv("HOCKEYR_TWITTER_CONSUMER_API_SECRET"),
+    access_token = Sys.getenv("HOCKEYR_TWITTER_ACCESS_TOKEN"),
+    access_secret = Sys.getenv("HOCKEYR_TWITTER_ACCESS_TOKEN_SECRET")
+  )
+  
+  tweet <- glue::glue(
+    "NEW RELEASE: {release$release}
+    
+    Details:
+    https://github.com/danmorse314/hockeyR/releases"
+  )
+  
+  rtweet::post_tweet(
+    status = tweet,
+    media = release$detail_img,
+    media_alt_text = release$details,
+    token = hockeyr_token
+  )
+  
+  # save most recent release
+  release$release |> saveRDS("last_release.rds")
+}

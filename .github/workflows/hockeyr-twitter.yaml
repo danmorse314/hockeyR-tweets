@@ -13,7 +13,7 @@ jobs:
           token: ${{ secrets.PAT_GITHUB }}
       - uses: r-lib/actions/setup-r@master
       - name: Install packages
-        run: Rscript -e 'install.packages(c("rtweet","dplyr","glue","stringr","rvest","git2r","lubridate"), dependencies = TRUE)'
+        run: Rscript -e 'install.packages(c("rtweet","dplyr","glue","stringr","rvest","git2r","lubridate","magick","webshot"), dependencies = TRUE)'
       - name: Create and post tweet
         env:
           GITHUB_PAT: ${{ secrets.PAT_GITHUB }}
