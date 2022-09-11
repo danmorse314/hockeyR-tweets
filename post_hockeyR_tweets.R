@@ -59,16 +59,4 @@ if(nrow(df) > 0){
   
   last_commit |> saveRDS("last_commit.rds")
   
-  # update to github
-  
-  GITHUB_PAT <- Sys.getenv("GITHUB_PAT")
-  
-  repo <- git2r::repository(getwd())
-  
-  git2r::add(repo, "last_commit.rds")
-
-  git2r::commit(repo, message = glue::glue("New hockeyR commits updated on {substr(Sys.time(), 1,10)}"))
-  
-  git2r::push(repo, credentials = git2r::cred_token())
-  
 }
