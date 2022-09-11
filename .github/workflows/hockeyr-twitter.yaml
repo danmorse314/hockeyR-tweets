@@ -1,0 +1,22 @@
+name: post-hockeyR-tweets
+
+on:
+  schedule:
+      - cron: '*/30 * * * *'
+
+jobs:
+  R-CMD-check:
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: r-lib/actions/setup-r@master
+      - name: Install rtweet package
+        run: Rscript -e 'install.packages(c("rtweet","dplyr","glue","stringr","rvest","git2r"), dependencies = TRUE)'
+      - name: Create and post tweet
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
+          HOCKEYR_TWITTER_CONSUMER_API_KEY: ${{ secrets.HOCKEYR_TWITTER_CONSUMER_API_KEY }}
+          HOCKEYR_TWITTER_CONSUMER_API_SECRET: ${{ secrets.HOCKEYR_TWITTER_CONSUMER_API_SECRET }}
+          HOCKEYR_TWITTER_ACCESS_TOKEN: ${{ secrets.HOCKEYR_TWITTER_ACCESS_TOKEN }}
+          HOCKEYR_TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.HOCKEYR_TWITTER_ACCESS_TOKEN_SECRET }}
+        run: Rscript post_hockeyR_tweets.R
