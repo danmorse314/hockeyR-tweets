@@ -13,9 +13,6 @@ scrape_commits <- function(user = NULL, repo = NULL, branch = "main"){
   # get commit author
   authors <- dplyr::tibble(
     author = site |>
-      rvest::html_elements("div") |>
-      rvest::html_elements("div") |>
-      rvest::html_elements("div") |>
       rvest::html_attr("aria-label")
   ) |>
     dplyr::filter(!is.na(author))
@@ -23,7 +20,6 @@ scrape_commits <- function(user = NULL, repo = NULL, branch = "main"){
   # get date times
   times <- dplyr::tibble(
     datetime = site |>
-      rvest::html_elements("div") |>
       rvest::html_elements("relative-time") |>
       rvest::html_attr("datetime")
   ) |>
